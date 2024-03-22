@@ -4,10 +4,17 @@ const constrollers = require('../controllers');
 const middlewares = require('../middlewares');
 const definition = require('../definition.json');
 
-router.get('/',
-    //middlewares.authenticate,
+router.get('/list',
+    middlewares.authenticate,
     constrollers.fileController.getFiles,
-    //middlewares.validateSchema(definition.definitions.File),
+    middlewares.validateSchema(definition.definitions.Files),
+);
+
+
+router.get('/data',
+    middlewares.authenticate,
+    constrollers.fileController.getFilesData,
+    middlewares.validateSchema(definition.definitions.Data),
 );
 
 module.exports = router;

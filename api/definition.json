@@ -16,7 +16,7 @@
     }
   },
   "definitions": {
-    "File": {
+    "Files": {
       "type": "object",
       "properties": {
         "files": {
@@ -26,12 +26,53 @@
           }
         }
       }
+    },
+    "DataLine": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "hex": {
+          "type": "string"
+        }
+      }
+    },
+    "Data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DataLine"
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "AuthorizationHeader": {
+      "name": "Authorization",
+      "in": "header",
+      "description": "Bearer token for authentication",
+      "required": true,
+      "type": "string"
     }
   },
   "paths": {
-    "/files": {
+    "/files/list": {
       "get": {
-        "summary": "Get secret files",
+        "summary": "Get files list",
         "security": [
           {
             "BearerAuth": []
@@ -39,12 +80,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successfully",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/File"
-              }
+              "$ref": "#/definitions/Files"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/files/data": {
+      "get": {
+        "summary": "Get files data",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "schema": {
+              "$ref": "#/definitions/Data"
             }
           },
           "401": {
