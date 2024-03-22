@@ -1,4 +1,7 @@
-node_modules
+api/node_modules
 api/.env
 api/tests/.env
-package-lock.json
+api/package-lock.json
+ui/.env
+ui/package-lock.json
+ui/node_modules

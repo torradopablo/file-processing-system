@@ -1,16 +1,14 @@
-function validateSchema(model) {
+const utils = require('../utils');
+
+function validateSchema(schema) {
     return (req, res, next) => {
-      const Model = require(`../models/${model}.json`);
   
-      const fields = Object.keys(Model);
-      const requestFields = Object.keys(req.body);
-  
-      const isValid = fields.every(field => requestFields.includes(field));
+      const isValid = utils.validateJSONSchema(req.body, schema);
   
       if (isValid) {
         next();
       } else {
-        res.status(400).json({ error: 'Invalid input schema' });
+        res.status(400).json({ error: 'Invalid schema' });
       }
     };
   }

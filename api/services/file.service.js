@@ -51,8 +51,6 @@ async function getFilesData(files){
 }
 
 
-
-
 module.exports = {
   getFiles,
   getFilesData,

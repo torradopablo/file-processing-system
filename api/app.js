@@ -8,7 +8,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 const swaggerDefinition = require('./definition.json');
 const options = {
   swaggerDefinition,

@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - PROVIDER_API_URL=https://echo-serv.tbxnet.com/v1/secret
+      - PROVIDER_SECRET_API=aSuperSecretKey
+
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - REACT_APP_PROVIDER_API_URL=http://localhost:3000/api
+      - REACT_APP_PROVIDER_SECRET_API=aSuperSecretKey
+    depends_on:
+      - api
